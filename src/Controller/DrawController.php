@@ -17,10 +17,12 @@ final class DrawController extends AbstractController
     {
         $user = $this->getUser();
 
+        $userAvatar = $user->getAvatar();
+
         $draws = $user->getDraw();
 
         return $this->render('draw/index.html.twig', [
-            'draws' => $draws,
+            'userAvatar' => $userAvatar,
         ]);
     }
 
