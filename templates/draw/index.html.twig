@@ -1,20 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DrawController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Applications/MAMP/htdocs/wheel4code/src/Controller/DrawController.php</code></li>
-        <li>Your template at <code>/Applications/MAMP/htdocs/wheel4code/templates/draw/index.html.twig</code></li>
-    </ul>
+<div class="container">
+    <h2 class="draw-title">Tirage en cours:</h2>
+    <section class="in-progress-draw">
+        {% include "_modal_add_member.html.twig" %}
+    </section>
+        
+        
+        
+    <h2 class="draw-title">Tirages terminés:</h2>
+    <section class="finished-draw">
+        {% include "_user_card.html.twig" %}
+        {% include "_user_card.html.twig" %}
+        {% include "_user_card.html.twig" %}
+        {% include "_user_card.html.twig" %}
+    </section>
 </div>
 {% endblock %}
