@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
@@ -20,6 +22,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Regex(
+      pattern: '/^[a-zA-Z0-9_]+$/'
+    )]
     private ?string $username = null;
 
     #[ORM\Column]
@@ -31,18 +36,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Draw>
      */
-    #[ORM\OneToMany(targetEntity: Draw::class, mappedBy: 'users')]
-    private Collection $draws;
-
-    /**
-     * @var Collection<int, Draw>
-     */
     #[ORM\ManyToMany(targetEntity: Draw::class, mappedBy: 'users')]
     private Collection $draw;
 
+    #[ORM\Column(length: 255)]
+    private ?string $avatar = null;
+
     public function __construct()
     {
-        $this->draws = new ArrayCollection();
         $this->draw = new ArrayCollection();
     }
 
@@ -100,18 +101,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // Si tu stockes des données temporaires sensibles, nettoie-les ici
     }
 
-    /**
-     * @return Collection<int, Draw>
-     */
-    public function getDraws(): Collection
-    {
-        return $this->draws;
-    }
+
 
     public function addDraw(Draw $draw): static
     {
-        if (!$this->draws->contains($draw)) {
-            $this->draws->add($draw);
+        if (!$this->draw->contains($draw)) {
+            $this->draw->add($draw);
             $draw->setUsers($this);
         }
 
@@ -136,5 +131,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getDraw(): Collection
     {
         return $this->draw;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar): static
+    {
+        $this->avatar = $avatar;
+
+        return $this;
     }
 }
