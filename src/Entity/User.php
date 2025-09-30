@@ -31,18 +31,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Draw>
      */
-    #[ORM\OneToMany(targetEntity: Draw::class, mappedBy: 'users')]
-    private Collection $draws;
-
-    /**
-     * @var Collection<int, Draw>
-     */
     #[ORM\ManyToMany(targetEntity: Draw::class, mappedBy: 'users')]
     private Collection $draw;
 
     public function __construct()
     {
-        $this->draws = new ArrayCollection();
         $this->draw = new ArrayCollection();
     }
 
@@ -100,18 +93,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // Si tu stockes des données temporaires sensibles, nettoie-les ici
     }
 
-    /**
-     * @return Collection<int, Draw>
-     */
-    public function getDraws(): Collection
-    {
-        return $this->draws;
-    }
+
 
     public function addDraw(Draw $draw): static
     {
-        if (!$this->draws->contains($draw)) {
-            $this->draws->add($draw);
+        if (!$this->draw->contains($draw)) {
+            $this->draw->add($draw);
             $draw->setUsers($this);
         }
 
