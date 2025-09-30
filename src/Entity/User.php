@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -25,6 +27,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
+
+    /**
+     * @var Collection<int, Draw>
+     */
+    #[ORM\OneToMany(targetEntity: Draw::class, mappedBy: 'users')]
+    private Collection $draws;
+
+    /**
+     * @var Collection<int, Draw>
+     */
+    #[ORM\ManyToMany(targetEntity: Draw::class, mappedBy: 'users')]
+    private Collection $draw;
+
+    public function __construct()
+    {
+        $this->draws = new ArrayCollection();
+        $this->draw = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -78,5 +98,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // Si tu stockes des données temporaires sensibles, nettoie-les ici
+    }
+
+    /**
+     * @return Collection<int, Draw>
+     */
+    public function getDraws(): Collection
+    {
+        return $this->draws;
+    }
+
+    public function addDraw(Draw $draw): static
+    {
+        if (!$this->draws->contains($draw)) {
+            $this->draws->add($draw);
+            $draw->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDraw(Draw $draw): static
+    {
+        if ($this->draws->removeElement($draw)) {
+            // set the owning side to null (unless already changed)
+            if ($draw->getUsers() === $this) {
+                $draw->setUsers(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Draw>
+     */
+    public function getDraw(): Collection
+    {
+        return $this->draw;
     }
 }
