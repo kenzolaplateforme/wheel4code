@@ -20,11 +20,13 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        $checkPassword = $form->get('checkPassword');
-
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($checkPassword->getData());
-
+            $file = $form->get('avatar')->getData();
+            if($file) {
+              $newNameFile = uniqid().uniqid().".".$file->guessExtension();
+              $user->setAvatar($newNameFile);
+              $file->move($this->getParameter('avatar_dir'), $newNameFile);
+            }
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
 
