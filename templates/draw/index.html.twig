@@ -8,9 +8,10 @@
     <section class="in-progress-draw">
         {% include "_modal_add_member.html.twig" %}
     </section>
-        
-        
-        
+
+      {% for draw in draws %}
+        {{draw.id}}
+      {% endfor %}
     <h2 class="draw-title">Tirages terminés:</h2>
     <section class="finished-draw">
         {% include "_user_card.html.twig" %}
