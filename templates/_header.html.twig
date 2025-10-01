@@ -17,9 +17,7 @@
             {% if app.user %}
                 <img src="{{ asset('assets/avatars/' ~ app.user.avatar) }}"
                     alt="Avatar"
-                    class="rounded-circle me-2"
-                    width="32"
-                    height="32">
+                    class="rounded-circle me-2 nav-avatar">
             {% else %}
                 <i class="fa-solid fa-circle-user" style="font-size: 27px;"></i>
             {% endif %}
