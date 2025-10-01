@@ -39,3 +39,8 @@
 .draw-title {
     margin: 1em;
 }
+.nav-link,
+.navbar-brand {
+  font-size: 20px;
+  color: white !important;
+}

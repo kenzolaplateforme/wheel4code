@@ -15,12 +15,8 @@ final class DrawController extends AbstractController
     #[Route('/draw', name: 'draw_all')]
     public function index(): Response
     {
-        $user = $this->getUser();
-
-        $draws = $user->getDraw();
 
         return $this->render('draw/index.html.twig', [
-            'draws' => $draws,
         ]);
     }
 
