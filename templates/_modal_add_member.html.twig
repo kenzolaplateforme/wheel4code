@@ -13,17 +13,24 @@
             </div>
             <div class="modal-body">
                 <div id="add-members">
-                    <form class="form-inline">
-                        <input class="form-control" type="text" id ="input" placeholder ="Ajouter un participant">
-                        <button class="btn btn-primary" id ="add" type="submit">Ajouter</button>
+                    <form class="form-inline" id="add-members-form" method="POST" action="{{path('draw_new')}}">
+                        <label for="participant-select">Participants</label>
+                        <select class="form-select" id="participant-select" style="width:100%;">
+                            {% for user in users %}
+                            <option>{{ user.username }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="btn-add mt-2">
+                            <button class="btn btn-primary" id="add" type="submit">Ajouter</button>
+                        </div>
                     </form>
                     <ul id="members-list"></ul>
 
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                 <button type="button" class="btn btn-primary" id="save-list">Enregistrer la liste</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
             </div>
         </div>
     </div>
@@ -34,31 +41,33 @@
 
 
 
+
 <script>
-//
+
+// on sélectionne l'élément avec son id
     document.addEventListener('DOMContentLoaded', () => {
     const drawModal = document.getElementById('drawModal');
     if (!drawModal) return;
-
+    
     drawModal.addEventListener('show.bs.modal', (event) => {
         const button = event.relatedTarget;
-        const recipient = button?.getAttribute('data-bs-whatever') || 'participants';
+        const recipient = button.getAttribute('data-bs-whatever');
     });
 
     // formulaire d'ajout de participants
     const form = document.querySelector('#add-members form');
-    const input = document.getElementById('input');
+    const select = document.getElementById('participant-select');
     const list  = document.getElementById('members-list');
     const output    = document.getElementById('members-output'); // ul sur la page
     const saveBtn   = document.getElementById('save-list');
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const value = (input.value || '').trim();
+        const value = (select.value || '').trim();
         if (!value) return;
 
         const li = document.createElement('li');
-        li.textContent = value; // textContent échappe déjà le HTML
+        li.textContent = value; 
         list.appendChild(li);
 
         form.reset();
