@@ -6,21 +6,27 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarColor01">
-      <!-- Menu de gauche -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" href="{{path('draw_all')}}"><i class="fa-solid fa-dice"></i> Les tirages</a>
         </li>
       </ul>
-
-      <!-- Menu de droite -->
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-circle-user"></i> Mon compte
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {% if app.user %}
+                <img src="{{ asset('assets/avatars/' ~ app.user.avatar) }}"
+                    alt="Avatar"
+                    class="rounded-circle me-2"
+                    width="32"
+                    height="32">
+            {% else %}
+                <i class="fa-solid fa-circle-user" style="font-size: 27px;"></i>
+            {% endif %}
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             {% if app.user %}
+              <li><a class="dropdown-item" href="{{path('app_profile')}}"><i class="fa-solid fa-user"></i> Mon profil</a></li>
               <li><a class="dropdown-item" href="{{path('app_logout')}}"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</a></li>
             {% else %}
               <li><a class="dropdown-item" href="{{path('app_login')}}"><i class="fa-solid fa-right-to-bracket"></i> Connexion</a></li>
