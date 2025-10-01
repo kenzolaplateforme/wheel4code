@@ -3,17 +3,16 @@
 
 {% block body %}
 
-<div class="container">
-    <h2 class="draw-title">Tirage en cours:</h2>
+<section class="index-container">
     <section class="in-progress-draw">
         {% include "_modal_add_member.html.twig" %}
     </section>
-    <section class="mt-3">
-        <h2 class="h5">Participants</h2>
+    <section>
         <ul id="members-output" class="list-unstyled m-0">
-            
         </ul>
     </section>
+    <h2 class="draw-title">Tirage en cours:</h2>
+    
     <h2 class="draw-title">Tirages terminés:</h2>
     <section class="finished-draw">
         {% include "_user_card.html.twig" %}
@@ -21,5 +20,6 @@
         {% include "_user_card.html.twig" %}
         {% include "_user_card.html.twig" %}
     </section>
-</div>
+</section>
 {% endblock %}
+            
