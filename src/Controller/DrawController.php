@@ -17,12 +17,10 @@ final class DrawController extends AbstractController
     public function index(Request $request, EntityManagerInterface $em,UserRepository $userRepo): Response
     {
       $user = $this->getUser();
-      
+
       $users = $userRepo ->findBy([], ['username' => 'ASC']);
 
-      $draws = $user->getDraw();
-
-      $draw = new Draw();  
+      $draw = new Draw();
 
       $drawForm = $this->createForm(DrawType::class, $draw);
 
@@ -46,7 +44,7 @@ final class DrawController extends AbstractController
     {
       $draw = new Draw();
 
-      
+
 
       // $drawForm = $this->createForm(DrawType::class, $draw);
 
