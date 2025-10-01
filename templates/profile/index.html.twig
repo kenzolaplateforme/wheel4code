@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    {# Avatar de l'utilisateur #}
+                    <img src="{{ asset('assets/avatars/') ~ app.user.avatar }}" alt="Avatar de {{ app.user.username }}" class="rounded-circle mb-3 avatar">
+                    {{form(formProfile)}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
