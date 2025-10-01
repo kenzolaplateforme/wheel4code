@@ -17,6 +17,9 @@ final class ProfileController extends AbstractController
     #[Route('/profile', name: 'app_profile')]
     public function index(Request $request, EntityManagerInterface $em): Response
     {
+        if (!$this->getUser()) {
+          return $this->redirectToRoute("draw_all");
+        }
         $user = $this->getUser();
         $formProfile = $this->createForm(ProfileType::class, $user);
 
@@ -33,6 +36,7 @@ final class ProfileController extends AbstractController
             $file->move($this->getParameter('avatar_dir'), $newNameFile);
           }
           $em->flush();
+          $this->addFlash("success", "Profil mis à jour");
           return $this->redirectToRoute("app_profile");
         }
         return $this->render('profile/index.html.twig', [

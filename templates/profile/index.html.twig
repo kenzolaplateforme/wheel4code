@@ -8,10 +8,7 @@
                 <div class="card-body text-center">
                     {# Avatar de l'utilisateur #}
                     <img src="{{ asset('assets/avatars/') ~ app.user.avatar }}" alt="Avatar de {{ app.user.username }}" class="rounded-circle mb-3 avatar">
-
-                    {# Nom d'utilisateur #}
-                              {{form(formProfile)}}
-
+                    {{form(formProfile)}}
                 </div>
             </div>
         </div>
