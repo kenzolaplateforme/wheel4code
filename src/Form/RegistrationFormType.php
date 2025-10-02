@@ -7,6 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
@@ -17,12 +19,17 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username')
+            ->add('username', TextType::class, [
+              'attr' => [
+                'class' => "form-control mb-3"
+              ],
+              'label' => 'Prénom (vrai)'
+            ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'mapped' => false,
                 'invalid_message' => 'Les mots de passe ne correspondent pas.',
-                'options' => ['attr' => ['autocomplete' => 'new-password']],
+                'options' => ['attr' => ['autocomplete' => 'new-password', 'class' => "form-control mb-3"]],
                 'required' => true,
                 'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmer le mot de passe'],
@@ -38,7 +45,17 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('avatar', FileType::class, [
-                'mapped' => false
+                'mapped' => false,
+                'attr' => [
+                  'class' => "form-control mb-3"
+                ],
+                'label' => 'Photo de profil'
+            ])
+            ->add('save', SubmitType::class, [
+              'label' => "S'inscrire",
+              'attr' => [
+                  'class' => "btn btn-primary"
+                ]
             ])
         ;
     }
