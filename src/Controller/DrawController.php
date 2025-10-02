@@ -33,7 +33,8 @@ final class DrawController extends AbstractController
 
         return $this->render('draw/index.html.twig', [
             'drawForm' => $drawForm,
-            'users' => $users
+            'users' => $users,
+            'user' => $user
         ]);
     }
 
@@ -71,6 +72,7 @@ final class DrawController extends AbstractController
      #[Route('/draw/{id}', name: 'draw_show', methods: ['GET'])]
     public function show(Draw $draw): Response
     {
+
         return $this->render('draw/show.html.twig', [
             'draw' => $draw
         ]);
