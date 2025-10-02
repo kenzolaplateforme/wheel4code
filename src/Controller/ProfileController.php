@@ -37,7 +37,9 @@ final class ProfileController extends AbstractController
             $file->move($this->getParameter('avatar_dir'), $newNameFile);
           }
           $plainPassword = $formProfile->get('plainPassword')->getData();
-          $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+          if ($plainPassword) {
+            $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+          }
 
           $em->flush();
           $this->addFlash("success", "Profil mis à jour");
