@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h2>Tirage #{{ draw.id }}</h2>
+
+<ul>
+    {% for user in draw.users %}
+        {% include "_user_card.html.twig" %}
+    {% else %}
+        <span>Aucun utilisateur sélectionné</span>
+    {% endfor %}
+</ul>
+{% endblock %}

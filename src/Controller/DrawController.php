@@ -33,15 +33,28 @@ final class DrawController extends AbstractController
 
         return $this->render('draw/index.html.twig', [
             'drawForm' => $drawForm,
-            'users' => $users
+            'users' => $users,
+            'user' => $user
         ]);
     }
 
 
-    #[Route('/draw/new', name: 'draw_new')]
-    public function new(Request $request, EntityManagerInterface $em,UserRepository $userRepo)
+    #[Route('/draw/new', name: 'draw_new', methods:['POST'])]
+    public function new(Request $request, EntityManagerInterface $em,UserRepository $userRepo): Response
     {
+      //on récupère la valeur de participants envoyé par le formulaire en méthode POST
+      $ids = explode(',', $request->request->get('participants', ''));
+
+      $users = $userRepo ->findBy(['id' => $ids]);
+      
       $draw = new Draw();
+      
+      foreach ($users as $user) {
+        $draw->addUser($user);
+      }
+
+      $em->persist($draw);
+      $em->flush();
 
 
 
@@ -54,8 +67,14 @@ final class DrawController extends AbstractController
       //   $em->flush();
       // }
 
-      return $this->render("/draw/new.html.twig", [
-        "users" => $users,
-      ]);
+      return $this->redirectToRoute('draw_show', ['id' => $draw->getId()]);
+    }
+     #[Route('/draw/{id}', name: 'draw_show', methods: ['GET'])]
+    public function show(Draw $draw): Response
+    {
+
+        return $this->render('draw/show.html.twig', [
+            'draw' => $draw
+        ]);
     }
 }
