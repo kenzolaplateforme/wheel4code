@@ -1,5 +1,6 @@
- <div class="user-card">
-    <img src="{{ asset('assets/images/dev-web.jpg') }}" alt="Image par défaut">
+<div class="user-card">
+   <img src="{{ asset('assets/avatars/') ~ user.avatar }}" alt="Avatar de {{ user.username }}" class="rounded-circle mb-3 avatar">
+   {{user.username}}
+</div> 
+   
 
-    <h3>username</h3>
- </div> 
