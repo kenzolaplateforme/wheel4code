@@ -33,6 +33,7 @@ final class DrawController extends AbstractController
 
         return $this->render('draw/index.html.twig', [
             'drawForm' => $drawForm,
+            // 'draws' => $draws,
             'users' => $users,
             'user' => $user
         ]);
