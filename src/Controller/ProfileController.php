@@ -10,12 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
-    public function index(Request $request, EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         if (!$this->getUser()) {
           return $this->redirectToRoute("draw_all");
@@ -35,6 +36,9 @@ final class ProfileController extends AbstractController
             $user->setAvatar($newNameFile);
             $file->move($this->getParameter('avatar_dir'), $newNameFile);
           }
+          $plainPassword = $formProfile->get('plainPassword')->getData();
+          $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+
           $em->flush();
           $this->addFlash("success", "Profil mis à jour");
           return $this->redirectToRoute("app_profile");
