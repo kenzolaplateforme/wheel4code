@@ -46,6 +46,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('avatar', FileType::class, [
                 'mapped' => false,
+                'required' => false,
                 'attr' => [
                   'class' => "form-control mb-3"
                 ],
