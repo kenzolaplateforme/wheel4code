@@ -17,6 +17,7 @@
     padding: 1rem;
     background-color: #158CBA;
     color: ghostwhite;
+    border-top: 4px solid #137ea7;
 }
 /* ------- Index: /draw --------- */
 .index-container {
@@ -258,6 +259,8 @@ label {
     97% { transform:translateY(0%); }
     99% { transform:translateY(-3%); }
     100% { transform:translateY(0); }
+.navbar-brand {
+  font-size: 27px;
 }
 @media (max-width: 576px) {
   .avatar {
