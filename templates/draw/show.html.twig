@@ -2,13 +2,12 @@
 
 {% block body %}
 
-<h2>Tirage #{{ draw.id }}</h2>
-
-<ul>
-    {% for user in draw.users %}
-        {% include "_user_card.html.twig" %}
-    {% else %}
-        <span>Aucun utilisateur sélectionné</span>
-    {% endfor %}
-</ul>
+<h2 class="draw-title">Tirage #{{ draw.id }}</h2>
+<section class="draw-users-list">
+        {% for user in draw.users %}
+            {% include "_user_card.html.twig" %}
+        {% else %}
+            <span>Aucun utilisateur sélectionné</span>
+        {% endfor %}
+</section>
 {% endblock %}

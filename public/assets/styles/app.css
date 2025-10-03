@@ -18,6 +18,7 @@
     background-color: #158CBA;
     color: ghostwhite;
 }
+/* ------- Index: /draw --------- */
 .index-container {
     margin: 2em;
     display: flex;
@@ -49,10 +50,15 @@
     align-items: center;
 }
 .user-card img {
-    width: 80%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+
 }
 .draw-title {
     margin: 1em;
+    text-align: center;
 }
 .modal-header {
     display: flex;
@@ -218,7 +224,12 @@ label {
 .avatar-profile:hover {
   transform: scale(1.05);
 }
-
+/*-------- Show:draw/{id}--------*/
+.draw-users-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 @media (max-width: 576px) {
   .avatar {
     width: 90px;
