@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Draw;
 use App\Form\DrawType;
 use App\Repository\UserRepository;
+use App\Service\DrawService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,9 +28,8 @@ final class DrawController extends AbstractController
 
 
     #[Route('/draw/new', name: 'draw_new', methods:['POST'])]
-    public function new(Request $request, EntityManagerInterface $em,UserRepository $userRepo): Response
+    public function new(DrawService $drawService,Request $request, EntityManagerInterface $em,UserRepository $userRepo): Response
     {
-      //on récupère la valeur de participants envoyé par le formulaire en méthode POST
       $ids = explode(',', $request->request->get('participants', ''));
 
       $users = $userRepo ->findBy(['id' => $ids]);
@@ -40,13 +40,19 @@ final class DrawController extends AbstractController
         $draw->addUser($user);
       }
 
-      if(count($draw->getUsers()) > 1) {
-        $em->persist($draw);
-        $em->flush();
+      if($drawService->isValid($draw)) {
+        if($this->isCsrfTokenValid('addUser', $request->request->get('_token'))) {
+          $em->persist($draw);
+          $em->flush();
+        } else {
+          $this->addFlash("error", "CSRF Token invalide");
+          return $this->redirectToRoute("draw_all");
+        }
       } else {
-        $this->addFlash("error", "Veuillez plus dun utilisateur.");
+        $this->addFlash("error", "Veuillez séléctionner deux utilisateurs minimum");
         return $this->redirectToRoute("draw_all");
       }
+
 
 
       // $drawForm = $this->createForm(DrawType::class, $draw);

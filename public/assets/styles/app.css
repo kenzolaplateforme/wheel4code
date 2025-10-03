@@ -17,6 +17,7 @@
     padding: 1rem;
     background-color: #158CBA;
     color: ghostwhite;
+    border-top: 4px solid #137ea7;
 }
 /* ------- Index: /draw --------- */
 .index-container {
@@ -229,6 +230,9 @@ label {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+.navbar-brand {
+  font-size: 27px;
 }
 @media (max-width: 576px) {
   .avatar {

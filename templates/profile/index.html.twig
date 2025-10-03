@@ -9,7 +9,7 @@
 
           {# Avatar #}
           <div class="avatar mb-3">
-            <img src="{{ asset('assets/avatars/' ~ app.user.avatar) }}" alt="Avatar de {{ app.user.username }}" class="avatar-profile">
+            <img src="{{ asset('assets/avatars/' ~ app.user.avatar ?? "default.png") }}" alt="Avatar de {{ app.user.username }}" class="avatar-profile">
           </div>
 
           {# Formulaire #}

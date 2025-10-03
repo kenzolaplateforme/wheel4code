@@ -41,6 +41,7 @@
                     <button type="submit" class="btn btn-primary">Enregistrer la liste</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                 </div>
+                <input type="hidden" value="{{csrf_token('addUser')}}" name="_token">
             </form>
         </div>
     </div>
