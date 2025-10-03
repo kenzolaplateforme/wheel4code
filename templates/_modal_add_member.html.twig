@@ -17,9 +17,16 @@
                     <label for="participant-select">Participants</label>
                     <select class="form-select" id="participant-select" style="width:100%;">
                         {% for user in users %}
-                            <option value="{{ user.id }}">{{ user.username }}</option>
+                            <option value="{{ user.id }}" id="valueOption">{{ user.username }}</option>
                         {% endfor %}
                     </select>
+
+                    <div class="form-check mb-3">
+                      <input class="form-check-input" type="checkbox" value="" id="allUsers">
+                      <label class="form-check-label" for="allUsers">
+                        Ajouter tous les utilisateurs
+                      </label>
+                    </div>
 
                     <div class="btn-add mt-2">
                         <button class="btn btn-primary" id="add" type="button">+ Ajouter</button>
@@ -46,33 +53,53 @@
 
 
 
-
-
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const addBtn = document.getElementById("add");
     const select = document.getElementById("participant-select");
     const membersList = document.getElementById("members-list");
     const hiddenInput = document.getElementById("selected-participants");
+    const selectBox = document.getElementById("allUsers");
 
     let selectedIds = [];
 
+    // Gérer le changement d'état de la checkbox (optionnel)
+    selectBox.addEventListener("change", function () {
+        select.disabled = this.checked;
+    });
+
     addBtn.addEventListener("click", function () {
-        const selectedOption = select.options[select.selectedIndex];
-        const userId = selectedOption.value;
-        const username = selectedOption.text;
+        const allOptions = Array.from(select.options);
 
-        if (userId && !selectedIds.includes(userId)) {
-            selectedIds.push(userId);
+        if (selectBox.checked) {
+            allOptions.forEach(option => {
+                const id = option.value;
+                const name = option.text;
 
-            // affichage dans la liste de la modale
-            const li = document.createElement("li");
-            li.textContent = username;
-            membersList.appendChild(li);
+                if (!selectedIds.includes(id)) {
+                    selectedIds.push(id);
 
-            // mise à jour de l'input caché pour le POST
-            hiddenInput.value = selectedIds.join(',');
+                    const li = document.createElement("li");
+                    li.textContent = name;
+                    membersList.appendChild(li);
+                }
+            });
+        } else {
+            const selectedOption = select.options[select.selectedIndex];
+            const userId = selectedOption.value;
+            const username = selectedOption.text;
+
+
+                selectedIds.push(userId);
+
+                const li = document.createElement("li");
+                li.textContent = username;
+                membersList.appendChild(li);
+
         }
+
+        // Mettre à jour l'input caché avec les IDs sélectionnés
+        hiddenInput.value = selectedIds.join(',');
     });
 });
 </script>

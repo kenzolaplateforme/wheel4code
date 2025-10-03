@@ -16,26 +16,12 @@ final class DrawController extends AbstractController
     #[Route('/draw', name: 'draw_all')]
     public function index(Request $request, EntityManagerInterface $em,UserRepository $userRepo): Response
     {
-      $user = $this->getUser();
 
       $users = $userRepo ->findBy([], ['username' => 'ASC']);
 
-      $draw = new Draw();
-
-      $drawForm = $this->createForm(DrawType::class, $draw);
-
-      $drawForm->handleRequest($request);
-
-      if ($drawForm->isSubmitted() && $drawForm->isValid()) {
-        $em->persist($draw);
-        $em->flush();
-      }
-
         return $this->render('draw/index.html.twig', [
-            'drawForm' => $drawForm,
             // 'draws' => $draws,
-            'users' => $users,
-            'user' => $user
+            'users' => $users
         ]);
     }
 
@@ -47,16 +33,20 @@ final class DrawController extends AbstractController
       $ids = explode(',', $request->request->get('participants', ''));
 
       $users = $userRepo ->findBy(['id' => $ids]);
-      
+
       $draw = new Draw();
-      
+
       foreach ($users as $user) {
         $draw->addUser($user);
       }
 
-      $em->persist($draw);
-      $em->flush();
-
+      if(count($draw->getUsers()) > 1) {
+        $em->persist($draw);
+        $em->flush();
+      } else {
+        $this->addFlash("error", "Veuillez plus dun utilisateur.");
+        return $this->redirectToRoute("draw_all");
+      }
 
 
       // $drawForm = $this->createForm(DrawType::class, $draw);

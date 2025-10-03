@@ -55,4 +55,14 @@ class Draw
         return $this;
     }
 
+    public function verifId(int $userId)
+    {
+        foreach ($this->users as $user) {
+            if ($user->getId() === $userId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
