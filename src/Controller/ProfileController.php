@@ -37,7 +37,7 @@ final class ProfileController extends AbstractController
             $file->move($this->getParameter('avatar_dir'), $newNameFile);
           }
           $plainPassword = $formProfile->get('plainPassword')->getData();
-          if ($plainPassword) {
+          if($plainPassword) {
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
           }
 
