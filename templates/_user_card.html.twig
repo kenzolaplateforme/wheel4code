@@ -1,6 +1,17 @@
-<div class="user-card">
-   <img src="{{ asset('assets/avatars/') ~ user.avatar }}" alt="Avatar de {{ user.username }}" class="rounded-circle mb-3 avatar">
-   {{user.username}}
-</div> 
+<div class="user-card d-flex flex-column align-items-center">
+  <div class="position-relative rounded-circle overflow-hidden" style="width:150px;height:150px;">
+    <img
+      src="{{ asset('assets/avatars/') ~ user.avatar }}"
+      alt="Avatar de {{ user.username }}"
+      class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover">
+    <!-- Bandeau noir plein en bas -->
+    <span
+      class="position-absolute bottom-0 start-0 end-0 bg-black text-white small text-truncate d-flex align-items-center justify-content-center"
+      style="height:36px;">
+      {{ user.username }}
+    </span>
+  </div>
+</div>
+
    
 
