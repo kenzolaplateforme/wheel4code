@@ -230,6 +230,35 @@ label {
   flex-wrap: wrap;
   justify-content: center;
 }
+.draw-header {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 1em;
+
+}
+.btn-picker {
+  margin: 0 auto;
+  padding: 1em;
+  border-radius: 10px;
+  width: 15%;
+  background-color: #158CBA ;
+  color: ghostwhite;
+  box-shadow: 2px 2px 2px lightgray;
+  border: none;
+}
+.bounce {
+  animation: bounce 2s ease infinite;
+}
+@keyframes bounce {
+    70% { transform:translateY(0%); }
+    80% { transform:translateY(-15%); }
+    90% { transform:translateY(0%); }
+    95% { transform:translateY(-7%); }
+    97% { transform:translateY(0%); }
+    99% { transform:translateY(-3%); }
+    100% { transform:translateY(0); }
+}
 @media (max-width: 576px) {
   .avatar {
     width: 90px;

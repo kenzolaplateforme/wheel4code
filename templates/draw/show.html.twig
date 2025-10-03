@@ -1,13 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-<h2 class="draw-title">Tirage #{{ draw.id }}</h2>
-<section class="draw-users-list">
+<div class="draw-header">
+    <h2 class="draw-title">Tirage #{{ draw.id }}</h2>
+    <button class="btn-picker bounce" id="btn-picker"> Que le sort fasse son oeuvre !</button>
+</div>
+<section class="draw-users-list" id="draw-members-list">
         {% for user in draw.users %}
             {% include "_user_card.html.twig" %}
         {% else %}
             <span>Aucun utilisateur sélectionné</span>
         {% endfor %}
 </section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const trigger = document.getElementById("btn-picker");
+        const list = document.getElementById("draw-members-list")
+
+        trigger.addEventListener("click", function() {
+            const cards = Array.from(list.querySelectorAll(".user-card"));
+                if (cards.length === 0) {
+                    alert("Aucun utilisateur sélectionné");
+                    return;
+                }
+            });
+        const winner = cards[Math.floor(Math.random() * cards.length)];
+   
+    });
+</script>
 {% endblock %}
