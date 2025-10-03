@@ -23,7 +23,7 @@ class RegistrationFormType extends AbstractType
               'attr' => [
                 'class' => "form-control mb-3"
               ],
-              'label' => 'Prénom (vrai)'
+              'label' => 'Pseudo'
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,

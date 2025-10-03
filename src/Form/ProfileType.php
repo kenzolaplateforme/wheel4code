@@ -24,6 +24,7 @@ class ProfileType extends AbstractType
         $builder
             ->add('username', TextType::class, [
               'required' => false,
+              'label' => 'Pseudo',
               'attr' => [
                 'class' => "form-control mb-3"
               ]
